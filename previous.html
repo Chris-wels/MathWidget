@@ -1,0 +1,1302 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Skills Practice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .module {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 10px;
+            display: inline-block;
+        }
+        input, button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Math Skills Practice</h1>
+    <div class="module">
+        <h2>Arithmetic Trainer</h2>
+        <label for="difficulty">Select Difficulty:</label>
+        <select id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+        <p id="question"></p>
+        <input type="number" id="answer" placeholder="Your Answer">
+        <button onclick="checkAnswer()">Submit</button>
+        <p id="feedback"></p>
+    </div>
+
+    <script>
+        let num1, num2, operator, correctAnswer;
+
+        function generateQuestion() {
+            let difficulty = document.getElementById("difficulty").value;
+            let range = difficulty === "easy" ? 10 : difficulty === "medium" ? 50 : 100;
+            num1 = Math.floor(Math.random() * range) + 1;
+            num2 = Math.floor(Math.random() * range) + 1;
+            let operators = ["+", "-", "*", "/"];
+            operator = operators[Math.floor(Math.random() * operators.length)];
+            correctAnswer = eval(num1 + operator + num2).toFixed(2);
+            document.getElementById("question").textContent = `Solve: ${num1} ${operator} ${num2}`;
+        }
+
+        function checkAnswer() {
+            let userAnswer = document.getElementById("answer").value;
+            let feedback = document.getElementById("feedback");
+            if (parseFloat(userAnswer) === parseFloat(correctAnswer)) {
+                feedback.textContent = "Correct!";
+                feedback.style.color = "green";
+            } else {
+                feedback.textContent = "Wrong! Try again.";
+                feedback.style.color = "red";
+            }
+            generateQuestion();
+        }
+
+        window.onload = generateQuestion;
+    </script>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 10px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Math Practice</h2>
+        <label for="numQuestions">How many questions?</label>
+        <input type="number" id="numQuestions" min="1" max="20" value="5">
+        <br><br>
+        <label for="operation">Choose operation:</label>
+        <select id="operation">
+            <option value="+">Addition (+)</option>
+            <option value="-">Subtraction (-)</option>
+            <option value="×">Multiplication (×)</option>
+            <option value="÷">Division (÷)</option>
+        </select>
+        <br><br>
+        <button onclick="startQuiz()">Start</button>
+        <div id="quiz" style="display: none;">
+            <h3 id="question"></h3>
+            <input type="number" id="answer" placeholder="Your answer">
+            <br><br>
+            <button onclick="checkAnswer()">Check Answer</button>
+            <p id="feedback"></p>
+            <p>Score: <span id="score">0</span></p>
+        </div>
+        <button id="restart" style="display: none;" onclick="restartQuiz()">Restart</button>
+    </div>
+    <script>
+        let numQuestions, operation, score, currentQuestion, totalQuestions;
+
+        function startQuiz() {
+            numQuestions = parseInt(document.getElementById('numQuestions').value);
+            operation = document.getElementById('operation').value;
+            score = 0;
+            currentQuestion = 0;
+            totalQuestions = numQuestions;
+            document.getElementById('score').innerText = score;
+            document.getElementById('quiz').style.display = 'block';
+            document.getElementById('restart').style.display = 'none';
+            generateQuestion();
+        }
+
+        function generateQuestion() {
+            if (currentQuestion >= totalQuestions) {
+                document.getElementById('feedback').innerText = `Quiz finished! You got ${score} out of ${totalQuestions}.`;
+                document.getElementById('restart').style.display = 'block';
+                document.getElementById('quiz').style.display = 'none';
+                return;
+            }
+            let num1 = Math.floor(Math.random() * 10) + 1;
+            let num2 = Math.floor(Math.random() * 10) + 1;
+            if (operation === "÷") num1 *= num2;
+            document.getElementById('question').innerText = `${num1} ${operation} ${num2} = ?`;
+            document.getElementById('answer').value = "";
+            document.getElementById('feedback').innerText = "";
+            currentQuestion++;
+        }
+
+        function checkAnswer() {
+            let answer = parseFloat(document.getElementById('answer').value);
+            let [num1, , num2] = document.getElementById('question').innerText.split(' ');
+            num1 = parseFloat(num1);
+            num2 = parseFloat(num2);
+            let correctAnswer;
+            switch (operation) {
+                case '+': correctAnswer = num1 + num2; break;
+                case '-': correctAnswer = num1 - num2; break;
+                case '×': correctAnswer = num1 * num2; break;
+                case '÷': correctAnswer = num1 / num2; break;
+            }
+            if (answer === correctAnswer) {
+                score++;
+                document.getElementById('feedback').innerText = "Correct!";
+            } else {
+                document.getElementById('feedback').innerText = `Wrong. The correct answer was ${correctAnswer}.`;
+            }
+            document.getElementById('score').innerText = score;
+            setTimeout(generateQuestion, 1000);
+        }
+
+        function restartQuiz() {
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('restart').style.display = 'none';
+            document.getElementById('feedback').innerText = "";
+        }
+    </script>
+</body>
+</html> -->
+
+
+<!-- WORKS PRETTY NICE -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            margin: 20px auto;
+        }
+        h1 {
+            color: #333;
+        }
+        select, input, button {
+            font-size: 16px;
+            padding: 8px;
+            margin: 5px;
+        }
+        .question {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: red;
+            font-weight: bold;
+        }
+        .result-list {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Math Practice</h1>
+        
+        <label for="difficulty">Select Difficulty:</label>
+        <select id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+
+        <label for="operation">Select Operation:</label>
+        <select id="operation">
+            <option value="add">Addition (+)</option>
+            <option value="subtract">Subtraction (-)</option>
+            <option value="multiply">Multiplication (×)</option>
+            <option value="divide">Division (÷)</option>
+        </select>
+
+        <div> 
+            <label for="numQuestions">Number of Questions:</label>
+            <input type="number" id="numQuestions" min="1" max="20" value="5">
+        </div>
+       
+        
+        <div>
+            <button onclick="startQuiz()">Start Quiz</button>
+        </div>
+        
+        <div id="quizSection" class="hidden">
+            <p class="question" id="questionText"></p>
+            <input type="number" id="answerInput" placeholder="Enter answer">
+            <button onclick="checkAnswer()">Check Answer</button>
+            <p id="feedback"></p>
+            <p>Score: <span id="score">0</span> / <span id="totalQuestions"></span></p>
+        </div>
+
+        <div id="resultSection" class="hidden">
+            <h2>Results</h2>
+            <ul id="resultList" class="result-list"></ul>
+            <button onclick="restartQuiz()">Restart</button>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        let totalQuestions = 0;
+        let score = 0;
+        let questions = [];
+
+        function startQuiz() {
+            let numQuestions = parseInt(document.getElementById("numQuestions").value);
+            let operation = document.getElementById("operation").value;
+            let difficulty = document.getElementById("difficulty").value;
+
+            if (numQuestions < 1) return;
+
+            score = 0;
+            currentQuestion = 0;
+            totalQuestions = numQuestions;
+            document.getElementById("score").innerText = score;
+            document.getElementById("totalQuestions").innerText = totalQuestions;
+            document.getElementById("resultList").innerHTML = "";
+
+            generateQuestions(numQuestions, operation, difficulty);
+            document.getElementById("quizSection").classList.remove("hidden");
+            document.getElementById("resultSection").classList.add("hidden");
+            showQuestion();
+        }
+
+        function generateQuestions(num, operation, difficulty) {
+            questions = [];
+            let min, max;
+
+            if (difficulty === "easy") {
+                min = 1; max = 10;
+            } else if (difficulty === "medium") {
+                min = 10; max = 50;
+            } else {
+                min = 50; max = 100;
+            }
+
+            for (let i = 0; i < num; i++) {
+                let num1 = Math.floor(Math.random() * (max - min + 1)) + min;
+                let num2 = Math.floor(Math.random() * (max - min + 1)) + min;
+                let questionText, answer;
+
+                if (operation === "add") {
+                    questionText = `${num1} + ${num2}`;
+                    answer = num1 + num2;
+                } else if (operation === "subtract") {
+                    if (num1 < num2) [num1, num2] = [num2, num1];
+                    questionText = `${num1} - ${num2}`;
+                    answer = num1 - num2;
+                } else if (operation === "multiply") {
+                    questionText = `${num1} × ${num2}`;
+                    answer = num1 * num2;
+                } else if (operation === "divide") {
+                    num1 = num2 * Math.floor(Math.random() * 10 + 1); // Ensure division is clean
+                    questionText = `${num1} ÷ ${num2}`;
+                    answer = num1 / num2;
+                }
+
+                questions.push({ question: questionText, answer });
+            }
+        }
+
+        function showQuestion() {
+            if (currentQuestion < totalQuestions) {
+                document.getElementById("questionText").innerText = questions[currentQuestion].question;
+                document.getElementById("answerInput").value = "";
+                document.getElementById("feedback").innerText = "";
+            } else {
+                endQuiz();
+            }
+        }
+
+        function checkAnswer() {
+            let userAnswer = parseFloat(document.getElementById("answerInput").value);
+            let correctAnswer = questions[currentQuestion].answer;
+            let feedback = document.getElementById("feedback");
+            let resultList = document.getElementById("resultList");
+
+            if (userAnswer === correctAnswer) {
+                feedback.innerText = "Correct!";
+                feedback.className = "correct";
+                score++;
+                resultList.innerHTML += `<li class="correct">${questions[currentQuestion].question} = ${correctAnswer} ✔</li>`;
+            } else {
+                feedback.innerText = "Incorrect!";
+                feedback.className = "incorrect";
+                resultList.innerHTML += `<li class="incorrect">${questions[currentQuestion].question} = ${correctAnswer} ✘ (Your answer: ${userAnswer})</li>`;
+            }
+
+            document.getElementById("score").innerText = score;
+            currentQuestion++;
+            setTimeout(showQuestion, 1000);
+        }
+
+        function endQuiz() {
+            document.getElementById("quizSection").classList.add("hidden");
+            document.getElementById("resultSection").classList.remove("hidden");
+        }
+
+        function restartQuiz() {
+            document.getElementById("quizSection").classList.add("hidden");
+            document.getElementById("resultSection").classList.add("hidden");
+            document.getElementById("numQuestions").value = 5;
+        }
+    </script>
+
+</body>
+</html> -->
+
+
+<!-- WORKS -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            margin: 20px auto;
+        }
+        h1 {
+            color: #333;
+        }
+        select, input, button {
+            font-size: 16px;
+            padding: 8px;
+            margin: 5px;
+        }
+        .question {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: red;
+            font-weight: bold;
+        }
+        .result-list {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Math Practice</h1>
+        
+        <label for="difficulty">Select Difficulty:</label>
+        <select id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+
+        <label for="operation">Select Operation:</label>
+        <select id="operation">
+            <option value="add">Addition (+)</option>
+            <option value="subtract">Subtraction (-)</option>
+            <option value="multiply">Multiplication (×)</option>
+            <option value="divide">Division (÷)</option>
+            <option value="square">Square (x²)</option>
+            
+            <option value="sqrt">Square Root (√)</option>
+            <option value="power">Powers (e.g., 2³)</option>
+            <option value="pemdas">Order of Operations (PEMDAS)</option>
+            <option value="fractions">Fractions</option>
+            <option value="decimals">Decimals</option>
+            <option value="percentages">Percentages</option>
+            <option value="ratios">Ratios</option>
+            <option value="algebra">Algebra</option>
+            <option value="prime">Prime Numbers</option>
+            <option value="gcd">GCD (Greatest Common Divisor)</option>
+            <option value="lcm">LCM (Least Common Multiple)</option>
+            <option value="geometry">Geometry</option>
+            <option value="probability">Probability</option>
+        </select>
+
+        <div> 
+            <label for="numQuestions">Number of Questions:</label>
+            <input type="number" id="numQuestions" min="1" max="20" value="5">
+        </div>
+        
+        <div>
+            <button onclick="startQuiz()">Start Quiz</button>
+        </div>
+        
+        <div id="quizSection" class="hidden">
+            <p class="question" id="questionText"></p>
+            <input type="number" id="answerInput" placeholder="Enter answer">
+            <button onclick="checkAnswer()">Check Answer</button>
+            <p id="feedback"></p>
+            <p>Score: <span id="score">0</span> / <span id="totalQuestions"></span></p>
+        </div>
+
+        <div id="resultSection" class="hidden">
+            <h2>Results</h2>
+            <ul id="resultList" class="result-list"></ul>
+            <button onclick="restartQuiz()">Restart</button>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        let totalQuestions = 0;
+        let score = 0;
+        let questions = [];
+
+        function startQuiz() {
+            let numQuestions = parseInt(document.getElementById("numQuestions").value);
+            let operation = document.getElementById("operation").value;
+            let difficulty = document.getElementById("difficulty").value;
+
+            if (numQuestions < 1) return;
+
+            score = 0;
+            currentQuestion = 0;
+            totalQuestions = numQuestions;
+            document.getElementById("score").innerText = score;
+            document.getElementById("totalQuestions").innerText = totalQuestions;
+            document.getElementById("resultList").innerHTML = "";
+
+            generateQuestions(numQuestions, operation, difficulty);
+            document.getElementById("quizSection").classList.remove("hidden");
+            document.getElementById("resultSection").classList.add("hidden");
+            showQuestion();
+        }
+
+        function generateQuestions(num, operation, difficulty) {
+            questions = [];
+            let min, max;
+
+            if (difficulty === "easy") {
+                min = 1; max = 10;
+            } else if (difficulty === "medium") {
+                min = 10; max = 50;
+            } else {
+                min = 50; max = 100;
+            }
+
+            for (let i = 0; i < num; i++) {
+                let num1 = Math.floor(Math.random() * (max - min + 1)) + min;
+                let num2 = Math.floor(Math.random() * (max - min + 1)) + min;
+                let questionText, answer;
+
+                if (operation === "add") {
+                    questionText = `${num1} + ${num2}`;
+                    answer = num1 + num2;
+                } else if (operation === "subtract") {
+                    if (num1 < num2) [num1, num2] = [num2, num1];
+                    questionText = `${num1} - ${num2}`;
+                    answer = num1 - num2;
+                } else if (operation === "multiply") {
+                    questionText = `${num1} × ${num2}`;
+                    answer = num1 * num2;
+                } else if (operation === "divide") {
+                    num1 = num2 * Math.floor(Math.random() * 10 + 1); // Ensure division is clean
+                    questionText = `${num1} ÷ ${num2}`;
+                    answer = num1 / num2;
+                } else if (operation === "square") {
+                    questionText = `${num1}²`;
+                    answer = num1 * num1;
+                } else if (operation === "sqrt") {
+                    questionText = `√${num1 * num1}`;
+                    answer = num1;
+                } else if (operation === "power") {
+                    let power = Math.floor(Math.random() * 5) + 2; // Random power between 2 and 6
+                    questionText = `${num1}^${power}`;
+                    answer = Math.pow(num1, power);
+                } else if (operation === "pemdas") {
+                    // Random question based on PEMDAS (simplified for this example)
+                    questionText = `${num1} + ${num2} * 2`;
+                    answer = num1 + num2 * 2;
+                } else if (operation === "fractions") {
+                    let num3 = Math.floor(Math.random() * 10) + 1;
+                    let num4 = Math.floor(Math.random() * 10) + 1;
+                    questionText = `${num1}/${num3} + ${num2}/${num4}`;
+                    answer = (num1 / num3) + (num2 / num4);
+                } else if (operation === "decimals") {
+                    let num3 = (Math.random() * 10).toFixed(2);
+                    let num4 = (Math.random() * 10).toFixed(2);
+                    questionText = `${num1} + ${num3}`;
+                    answer = num1 + parseFloat(num3);
+                } else if (operation === "percentages") {
+                    questionText = `What is 20% of ${num1}?`;
+                    answer = 0.2 * num1;
+                } else if (operation === "ratios") {
+                    let ratio = (num1 * num2).toFixed(2);
+                    questionText = `What is the ratio of ${num1} to ${num2}?`;
+                    answer = ratio;
+                } else if (operation === "algebra") {
+                    questionText = `Solve for x: 2x + 3 = ${num1 + num2}`;
+                    answer = (num1 + num2 - 3) / 2;
+                } else if (operation === "prime") {
+                    // Simple prime number check (answers are either true/false)
+                    questionText = `Is ${num1} a prime number?`;
+                    answer = isPrime(num1);
+                } else if (operation === "gcd") {
+                    questionText = `GCD of ${num1} and ${num2}`;
+                    answer = gcd(num1, num2);
+                } else if (operation === "lcm") {
+                    questionText = `LCM of ${num1} and ${num2}`;
+                    answer = lcm(num1, num2);
+                } else if (operation === "geometry") {
+                    // Area of rectangle for simplicity
+                    questionText = `Area of rectangle (length: ${num1}, width: ${num2})`;
+                    answer = num1 * num2;
+                } else if (operation === "probability") {
+                    // Simple probability (rolling a die)
+                    questionText = `What is the probability of rolling a 6 on a die?`;
+                    answer = 1 / 6;
+                }
+
+                questions.push({ question: questionText, answer });
+            }
+        }
+
+        function showQuestion() {
+            if (currentQuestion < totalQuestions) {
+                document.getElementById("questionText").innerText = questions[currentQuestion].question;
+                document.getElementById("answerInput").value = "";
+                document.getElementById("feedback").innerText = "";
+            } else {
+                endQuiz();
+            }
+        }
+
+        function checkAnswer() {
+            let userAnswer = parseFloat(document.getElementById("answerInput").value);
+            let correctAnswer = questions[currentQuestion].answer;
+            let feedback = document.getElementById("feedback");
+            let resultList = document.getElementById("resultList");
+
+            if (userAnswer === correctAnswer) {
+                feedback.innerText = "Correct!";
+                feedback.className = "correct";
+                score++;
+                resultList.innerHTML += `<li class="correct">${questions[currentQuestion].question} = ${correctAnswer} ✔</li>`;
+            } else {
+                feedback.innerText = "Incorrect!";
+                feedback.className = "incorrect";
+                resultList.innerHTML += `<li class="incorrect">${questions[currentQuestion].question} = ${correctAnswer} ✘ (Your answer: ${userAnswer})</li>`;
+            }
+
+            document.getElementById("score").innerText = score;
+            currentQuestion++;
+            setTimeout(showQuestion, 1000);
+        }
+
+        function endQuiz() {
+            document.getElementById("quizSection").classList.add("hidden");
+            document.getElementById("resultSection").classList.remove("hidden");
+        }
+
+        function restartQuiz() {
+            document.getElementById("resultSection").classList.add("hidden");
+            document.getElementById("quizSection").classList.remove("hidden");
+            startQuiz();
+        }
+
+        function isPrime(num) {
+            if (num <= 1) return false;
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i === 0) return false;
+            }
+            return true;
+        }
+
+        function gcd(a, b) {
+            while (b !== 0) {
+                let temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a;
+        }
+
+        function lcm(a, b) {
+            return (a * b) / gcd(a, b);
+        }
+    </script>
+
+</body>
+</html>  -->
+
+
+
+<!-- good -->
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Practice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            margin: 20px auto;
+        }
+        h1 {
+            color: #333;
+        }
+        select, input, button {
+            font-size: 16px;
+            padding: 8px;
+            margin: 5px;
+        }
+        .question {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: red;
+            font-weight: bold;
+        }
+        .result-list {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Math Practice</h1>
+        
+        <label for="difficulty">Select Difficulty:</label>
+        <select id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+
+        <label for="operation">Select Operation:</label>
+        <select id="operation">
+            <option value="add">Addition (+)</option>
+            <option value="subtract">Subtraction (-)</option>
+            <option value="multiply">Multiplication (×)</option>
+            <option value="divide">Division (÷)</option>
+            <option value="square">Square (x²)</option>
+            <option value="sqrt">Square Root (√)</option>
+            <option value="power">Powers (e.g., 2³)</option>
+            <option value="pemdas">Order of Operations (PEMDAS)</option>
+            <option value="fractions">Fractions</option>
+            <option value="decimals">Decimals</option>
+            <option value="percentages">Percentages</option>
+            <option value="ratios">Ratios</option>
+            <option value="algebra">Algebra</option>
+            <option value="prime">Prime Numbers</option>
+            <option value="trigonometry">Trigonometry & Pythagoras</option>
+        </select>
+
+        <div> 
+            <label for="numQuestions">Number of Questions:</label>
+            <input type="number" id="numQuestions" min="1" max="20" value="5">
+        </div>
+        
+        <div>
+            <button onclick="startQuiz()">Start Quiz</button>
+        </div>
+        
+        <div id="quizSection" class="hidden">
+            <p class="question" id="questionText"></p>
+            <canvas id="triangleCanvas" class="hidden"></canvas>
+            <input type="text" id="answerInput" placeholder="Enter answer">
+            <button onclick="checkAnswer()">Check Answer</button>
+            <p id="feedback"></p>
+            <p>Score: <span id="score">0</span> / <span id="totalQuestions"></span></p>
+        </div>
+
+        <div id="resultSection" class="hidden">
+            <h2>Results</h2>
+            <ul id="resultList" class="result-list"></ul>
+            <button onclick="restartQuiz()">Restart</button>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        let totalQuestions = 0;
+        let score = 0;
+        let questions = [];
+    
+        function startQuiz() {
+            let numQuestions = parseInt(document.getElementById("numQuestions").value);
+            let operation = document.getElementById("operation").value;
+            let difficulty = document.getElementById("difficulty").value;
+    
+            if (numQuestions < 1) return;
+    
+            score = 0;
+            currentQuestion = 0;
+            totalQuestions = numQuestions;
+            document.getElementById("score").innerText = score;
+            document.getElementById("totalQuestions").innerText = totalQuestions;
+            document.getElementById("resultList").innerHTML = "";
+    
+            generateQuestions(numQuestions, operation, difficulty);
+            document.getElementById("quizSection").classList.remove("hidden");
+            document.getElementById("resultSection").classList.add("hidden");
+            showQuestion();
+        }
+    
+        function generateQuestions(num, operation, difficulty) {
+            questions = [];
+            let min, max;
+    
+            if (difficulty === "easy") {
+                min = 1; max = 10;
+            } else if (difficulty === "medium") {
+                min = 10; max = 50;
+            } else {
+                min = 50; max = 100;
+            }
+    
+          
+    for (let i = 0; i < num; i++) {
+        let num1 = Math.floor(Math.random() * (max - min + 1)) + min;
+        let num2 = Math.floor(Math.random() * (max - min + 1)) + min;
+        let questionText, answer, extraData = null;
+
+        switch (operation) {
+            case "add":
+                questionText = `${num1} + ${num2}`;
+                answer = num1 + num2;
+                break;
+            case "subtract":
+                questionText = `${num1} - ${num2}`;
+                answer = num1 - num2;
+                break;
+            case "multiply":
+                questionText = `${num1} × ${num2}`;
+                answer = num1 * num2;
+                break;
+            case "divide":
+                questionText = `${num1} ÷ ${num2}`;
+                answer = (num1 / num2).toFixed(2);
+                break;
+            case "square":
+                questionText = `${num1}²`;
+                answer = num1 * num1;
+                break;
+            case "sqrt":
+                questionText = `√${num1}`;
+                answer = Math.sqrt(num1).toFixed(2);
+                break;
+            case "power":
+                let exponent = Math.floor(Math.random() * 5) + 2; // Exponent between 2 and 6
+                // Use superscript for the exponent
+                questionText = `${num1}${getSuperscript(exponent)}`;
+                answer = Math.pow(num1, exponent);
+                break;
+            case "pemdas":
+                let expression = `${num1} + (${num2} × ${num1})`;
+                questionText = `Solve: ${expression}`;
+                answer = num1 + num2 * num1;
+                break;
+            case "fractions":
+                questionText = `${(Math.random() * 10).toFixed(2)} / ${(Math.random() * 10).toFixed(2)}`;
+                answer = (parseFloat(questionText.split(' / ')[0]) / parseFloat(questionText.split(' / ')[1])).toFixed(2);
+                break;
+            case "decimals":
+                // Use decimal numbers for both num1 and num2 with all four operations
+                let num1Decimal = (Math.random() * 10).toFixed(2);
+                let num2Decimal = (Math.random() * 10).toFixed(2);
+                let operationType = Math.floor(Math.random() * 4);  // Randomly choose one of the four operations
+                if (operationType === 0) {  // Add
+                    questionText = `${num1Decimal} + ${num2Decimal}`;
+                    answer = (parseFloat(num1Decimal) + parseFloat(num2Decimal)).toFixed(2);
+                } else if (operationType === 1) {  // Subtract
+                    questionText = `${num1Decimal} - ${num2Decimal}`;
+                    answer = (parseFloat(num1Decimal) - parseFloat(num2Decimal)).toFixed(2);
+                } else if (operationType === 2) {  // Multiply
+                    questionText = `${num1Decimal} × ${num2Decimal}`;
+                    answer = (parseFloat(num1Decimal) * parseFloat(num2Decimal)).toFixed(2);
+                } else {  // Divide
+                    questionText = `${num1Decimal} ÷ ${num2Decimal}`;
+                    answer = (parseFloat(num1Decimal) / parseFloat(num2Decimal)).toFixed(2);
+                }
+                break;
+            case "percentages":
+                questionText = `What is ${num1}% of ${num2}?`;
+                answer = ((num1 / 100) * num2).toFixed(2);
+                break;
+            case "ratios":
+                questionText = `What is the ratio of ${num1} to ${num2}?`;
+                answer = (num1 / num2).toFixed(2);
+                break;
+            case "algebra":
+                questionText = `Solve for x: ${num1}x = ${num2}`;
+                answer = num2 / num1;
+                break;
+            case "prime":
+                questionText = `Is ${num1} a prime number? (yes/no)`;
+                answer = isPrime(num1) ? "yes" : "no";
+                break;
+            case "trigonometry":
+                extraData = generateTriangle();
+                let trigFunctions = ["sin", "cos", "tan", "pythagoras"];
+                let selectedTrig = trigFunctions[Math.floor(Math.random() * trigFunctions.length)];
+
+                if (selectedTrig === "sin") {
+                    questionText = `Find sin(θ)`;
+                    answer = (extraData.opposite / extraData.hypotenuse).toFixed(4);
+                } else if (selectedTrig === "cos") {
+                    questionText = `Find cos(θ)`;
+                    answer = (extraData.adjacent / extraData.hypotenuse).toFixed(4);
+                } else if (selectedTrig === "tan") {
+                    questionText = `Find tan(θ)`;
+                    answer = (extraData.opposite / extraData.adjacent).toFixed(4);
+                } else {
+                    questionText = `Find hypotenuse`;
+                    answer = extraData.hypotenuse.toFixed(2);
+                }
+                break;
+        }
+
+        questions.push({ question: questionText, answer, extraData });
+    }
+}
+
+// Function to get superscript for exponents
+function getSuperscript(exp) {
+    const superscripts = {
+        0: "⁰", 1: "¹", 2: "²", 3: "³", 4: "⁴", 5: "⁵", 6: "⁶", 7: "⁷", 8: "⁸", 9: "⁹"
+    };
+
+    return exp.toString().split('').map(digit => superscripts[digit]).join('');
+}
+        
+    
+        function generatePemdasExpression(num1, num2) {
+            let operations = ["+", "-", "*", "/"];
+            let op1 = operations[Math.floor(Math.random() * operations.length)];
+            let op2 = operations[Math.floor(Math.random() * operations.length)];
+            let expression = `(${num1} ${op1} ${num2}) ${op2} ${num1}`;
+            return expression;
+        }
+    
+        function generateDecimalExpression(num1, num2) {
+            let operations = ["+", "-", "*", "/"];
+            let op = operations[Math.floor(Math.random() * operations.length)];
+            return `${num1} ${op} ${num2}`;
+        }
+    
+        function showQuestion() {
+            if (currentQuestion < totalQuestions) {
+                let currentQ = questions[currentQuestion];
+                document.getElementById("questionText").innerText = currentQ.question;
+                document.getElementById("answerInput").value = "";
+                document.getElementById("feedback").innerText = "";
+    
+                if (currentQ.extraData) {
+                    document.getElementById("triangleCanvas").classList.remove("hidden");
+                    drawTriangle(currentQ.extraData);
+                } else {
+                    document.getElementById("triangleCanvas").classList.add("hidden");
+                }
+            } else {
+                endQuiz();
+            }
+        }
+    
+        function generateTriangle() {
+            let a = Math.floor(Math.random() * 10) + 5;
+            let b = Math.floor(Math.random() * 10) + 5;
+            let c = Math.sqrt(a * a + b * b);
+            return { adjacent: a, opposite: b, hypotenuse: c };
+        }
+    
+        function drawTriangle(data) {
+            let canvas = document.getElementById("triangleCanvas");
+            let ctx = canvas.getContext("2d");
+            canvas.width = 200;
+            canvas.height = 200;
+    
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+            ctx.moveTo(20, 150);
+            ctx.lineTo(180, 150);
+            ctx.lineTo(20, 50);
+            ctx.closePath();
+            ctx.stroke();
+    
+            ctx.fillText("θ", 25, 140);
+            ctx.fillText(`a=${data.adjacent}`, 100, 160);
+            ctx.fillText(`b=${data.opposite}`, 10, 100);
+            ctx.fillText(`c=?`, 100, 80);
+        }
+    
+        function checkAnswer() {
+            let currentQ = questions[currentQuestion];
+            let userAnswer = parseFloat(document.getElementById("answerInput").value);
+            let correctAnswer = parseFloat(currentQ.answer);
+    
+            let feedback = document.getElementById("feedback");
+    
+            if (Math.abs(userAnswer - correctAnswer) < 0.01 || userAnswer == currentQ.answer) {
+                score++;
+                document.getElementById("score").innerText = score;
+                feedback.innerText = "Correct!";
+                feedback.className = "correct";
+            } else {
+                feedback.innerText = `Incorrect! The correct answer was: ${currentQ.answer}`;
+                feedback.className = "incorrect";
+            }
+    
+            currentQuestion++;
+            setTimeout(showQuestion, 1500);
+        }
+    
+        function isPrime(num) {
+            if (num <= 1) return false;
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i === 0) return false;
+            }
+            return true;
+        }
+    
+        function endQuiz() {
+            document.getElementById("quizSection").classList.add("hidden");
+            document.getElementById("resultSection").classList.remove("hidden");
+    
+            let resultList = document.getElementById("resultList");
+            resultList.innerHTML = `Your score is ${score} / ${totalQuestions}`;
+        }
+    
+        function restartQuiz() {
+            document.getElementById("resultSection").classList.add("hidden");
+            document.getElementById("quizSection").classList.remove("hidden");
+            startQuiz();
+        }
+    </script>
+    
+</body>
+    </html> -->
+    
+
+
+
+
+
+<!-- Trigonometry -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Quiz with Visuals</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .quiz-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .canvas-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        canvas {
+            border: 1px solid #000;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .input-field {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .correct { color: green; }
+        .incorrect { color: red; }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="question" id="questionText"></div>
+
+        <div class="canvas-container">
+            <canvas id="triangleCanvas" width="300" height="200"></canvas>
+        </div>
+
+        <input type="text" id="answerInput" class="input-field" placeholder="Your answer">
+        <button class="button" onclick="checkAnswer()">Submit</button>
+
+        <div id="resultSection" class="hidden">
+            <div id="resultText" class="result"></div>
+            <button class="button" onclick="nextQuestion()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+
+        const questionTypes = ['pythagorean', 'area', 'trigonometry'];
+
+        // Function to generate random values for each question
+        function generateRandomValues() {
+            return {
+                pythagorean: {
+                    a: Math.floor(Math.random() * 10) + 1, // Random side length between 1 and 10
+                    b: Math.floor(Math.random() * 10) + 1, // Random side length between 1 and 10
+                    correctAnswer: 0 // Will be calculated later
+                },
+                area: {
+                    length: Math.floor(Math.random() * 10) + 1, // Random length between 1 and 10
+                    width: Math.floor(Math.random() * 10) + 1, // Random width between 1 and 10
+                    correctAnswer: 0 // Will be calculated later
+                },
+                trigonometry: {
+                    opposite: Math.floor(Math.random() * 10) + 1, // Random opposite side between 1 and 10
+                    adjacent: Math.floor(Math.random() * 10) + 1, // Random adjacent side between 1 and 10
+                    correctAnswer: 0 // Will be calculated later
+                }
+            };
+        }
+
+        let currentValues = generateRandomValues();
+
+        function shuffleQuestions() {
+            // Shuffle the question types so they appear in random order
+            for (let i = questionTypes.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [questionTypes[i], questionTypes[j]] = [questionTypes[j], questionTypes[i]];
+            }
+        }
+
+        function showQuestion() {
+            const currentType = questionTypes[currentQuestion];
+            const canvas = document.getElementById('triangleCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+
+            // Calculate the correct answer for the current question
+            if (currentType === 'pythagorean') {
+                currentValues.pythagorean.correctAnswer = Math.sqrt(
+                    Math.pow(currentValues.pythagorean.a, 2) + Math.pow(currentValues.pythagorean.b, 2)
+                ).toFixed(2); // Round to two decimal places
+            } else if (currentType === 'area') {
+                currentValues.area.correctAnswer = currentValues.area.length * currentValues.area.width;
+            } else if (currentType === 'trigonometry') {
+                currentValues.trigonometry.correctAnswer = (currentValues.trigonometry.opposite / currentValues.trigonometry.adjacent).toFixed(2);
+            }
+
+            // Draw based on question type
+            if (currentType === 'pythagorean') {
+                // Pythagorean Theorem Question - Draw Right Triangle
+                ctx.beginPath();
+                ctx.moveTo(50, 150); // Bottom-left corner
+                ctx.lineTo(50, 50);  // Vertical side
+                ctx.lineTo(150, 50); // Horizontal side
+                ctx.closePath();
+                ctx.stroke();
+
+                // Label the sides
+                ctx.fillText(`a = ${currentValues.pythagorean.a}`, 55, 100);  // Vertical side
+                ctx.fillText(`b = ${currentValues.pythagorean.b}`, 100, 60);  // Horizontal side
+                ctx.fillText(`c = ?`, 90, 120);  // Hypotenuse
+            } else if (currentType === 'area') {
+                // Area Question - Draw Rectangle
+                ctx.fillStyle = "#007bff";
+                ctx.fillRect(50, 50, currentValues.area.length * 10, currentValues.area.width * 10);  // Scale for visual
+                ctx.fillStyle = "black";
+                ctx.fillText(`Length = ${currentValues.area.length}`, 50, 40);
+                ctx.fillText(`Width = ${currentValues.area.width}`, 50, 140);
+            } else if (currentType === 'trigonometry') {
+                // Trigonometry Question - Draw Right Triangle
+                ctx.beginPath();
+                ctx.moveTo(50, 150); // Bottom-left corner
+                ctx.lineTo(50, 50);  // Vertical side
+                ctx.lineTo(150, 50); // Horizontal side
+                ctx.closePath();
+                ctx.stroke();
+
+                // Label the sides
+                ctx.fillText(`Opposite = ${currentValues.trigonometry.opposite}`, 55, 100);  
+                ctx.fillText(`Adjacent = ${currentValues.trigonometry.adjacent}`, 100, 60);
+                ctx.fillText(`Sin = ?`, 90, 120);
+            }
+
+            // Display the question text
+            document.getElementById("questionText").textContent = getQuestionText(currentType);
+
+            // Clear answer input and result section
+            document.getElementById("answerInput").value = "";
+            document.getElementById("resultSection").classList.add("hidden");
+        }
+
+        function getQuestionText(type) {
+            if (type === 'pythagorean') {
+                return "What is the hypotenuse of this right triangle?";
+            } else if (type === 'area') {
+                return "What is the area of this rectangle?";
+            } else if (type === 'trigonometry') {
+                return "What is the sine of the angle in this right triangle?";
+            }
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseFloat(document.getElementById("answerInput").value);
+            const correctAnswer = currentValues[questionTypes[currentQuestion]].correctAnswer;
+            
+            // Check if the answer is correct
+            if (Math.abs(userAnswer - correctAnswer) < 0.1) {
+                document.getElementById("resultText").textContent = "Correct!";
+                document.getElementById("resultText").classList.add("correct");
+                document.getElementById("resultText").classList.remove("incorrect");
+            } else {
+                document.getElementById("resultText").textContent = `Incorrect! The correct answer is: ${correctAnswer}`;
+                document.getElementById("resultText").classList.add("incorrect");
+                document.getElementById("resultText").classList.remove("correct");
+            }
+
+            document.getElementById("resultSection").classList.remove("hidden");
+        }
+
+        function nextQuestion() {
+            // Hide result section when moving to next question
+            document.getElementById("resultSection").classList.add("hidden");
+            currentQuestion++;
+
+            if (currentQuestion < questionTypes.length) {
+                showQuestion();
+            } else {
+                document.getElementById("resultText").textContent = "Quiz Over!";
+                document.getElementById("resultSection").classList.add("hidden");
+            }
+        }
+
+        // Shuffle questions and start the quiz by showing the first question
+        shuffleQuestions();
+        showQuestion();
+    </script>
+</body>
+</html> -->
